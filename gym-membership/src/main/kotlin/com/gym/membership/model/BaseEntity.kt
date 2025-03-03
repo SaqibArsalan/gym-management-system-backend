@@ -1,4 +1,4 @@
-package com.gym.model
+package com.gym.membership.model
 
 
 import com.devskiller.friendly_id.FriendlyId

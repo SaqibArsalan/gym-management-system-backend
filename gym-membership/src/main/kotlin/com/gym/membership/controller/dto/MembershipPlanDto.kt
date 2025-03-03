@@ -1,4 +1,4 @@
-package com.gym.controller.dto
+package com.gym.membership.controller.dto
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 

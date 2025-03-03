@@ -1,6 +1,6 @@
-package com.gym.model
+package com.gym.membership.model
 
-import com.gym.controller.dto.MembershipPlanDto
+import com.gym.membership.controller.dto.MembershipPlanDto
 import jakarta.persistence.*
 
 

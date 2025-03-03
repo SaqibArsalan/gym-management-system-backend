@@ -1,7 +1,7 @@
-package com.gym.controller
+package com.gym.membership.controller
 
-import com.gym.service.MembershipPlanService
-import com.gym.controller.dto.MembershipPlanDto
+import com.gym.membership.service.MembershipPlanService
+import com.gym.membership.controller.dto.MembershipPlanDto
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping

@@ -1,6 +1,6 @@
-package com.gym.model
+package com.gym.membership.model
 
-import com.gym.model.BaseEntity
+import com.gym.membership.model.BaseEntity
 import jakarta.persistence.*
 import java.sql.Timestamp
 
