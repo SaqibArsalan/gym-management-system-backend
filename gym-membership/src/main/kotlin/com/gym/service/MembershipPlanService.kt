@@ -1,9 +1,9 @@
-package com.gym.membership.service
+package com.gym.service
 
-import com.gym.membership.controller.dto.MembershipPlanDto
-import com.gym.membership.exception.FailedToCreateMembershipPlanException
-import com.gym.membership.model.MembershipPlans
-import com.gym.membership.repository.MembershipPlanRepository
+import com.gym.controller.dto.MembershipPlanDto
+import com.gym.exception.FailedToCreateMembershipPlanException
+import com.gym.model.MembershipPlans
+import com.gym.repository.MembershipPlanRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 

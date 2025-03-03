@@ -1,4 +1,4 @@
-package com.gym.membership.advice
+package com.gym.advice
 
 
 import org.apache.logging.log4j.LogManager
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import java.util.*
 
-@RestControllerAdvice(basePackages = ["com.gym.controller"])
+@RestControllerAdvice(basePackages = ["com.gym"])
 class MembershipExceptionsAdvice {
     private val logger: Logger = LogManager.getLogger(MembershipExceptionsAdvice::class.java)
     private val errorMessage = "An {} exception has occurred, errors : [{}]"

@@ -1,12 +1,12 @@
-package com.gym.membership.controller.dto
+package com.gym.controller.dto
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class MembershipPlanDto(
     val name: String,
-    val durationInMonths: Number,
-    val price: Number,
+    val durationInMonths: Int,
+    val price: Double,
     val description: String
 ) {
 }

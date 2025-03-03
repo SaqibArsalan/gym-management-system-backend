@@ -76,6 +76,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.gym</groupId>
+            <artifactId>gym-membership</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.7.1</version> <!-- Use latest -->

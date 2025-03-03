@@ -1,6 +1,6 @@
-package com.gym.membership.model
+package com.gym.model
 
-import com.gym.membership.controller.dto.MembershipPlanDto
+import com.gym.controller.dto.MembershipPlanDto
 import jakarta.persistence.*
 
 
@@ -11,10 +11,10 @@ data class MembershipPlans(
     val name: String = "",
 
     @Column(name = "duration_in_months")
-    val durationInMonths: Number = 0,
+    val durationInMonths: Int = 0,
 
     @Column(name = "price")
-    val price: Number = 0.0,
+    val price: Double = 0.0,
 
     @Column(name = "description")
     val description: String = "",
