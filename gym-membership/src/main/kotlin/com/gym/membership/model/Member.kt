@@ -1,8 +1,8 @@
 package com.gym.membership.model
 
-import com.gym.membership.model.BaseEntity
+import com.gym.membership.controller.dto.MemberDto
 import jakarta.persistence.*
-import java.sql.Timestamp
+import java.time.LocalDate
 
 
 @Entity
@@ -15,9 +15,19 @@ data class Member(
     val membershipPlanId: String = "",
 
     @Column(name = "join_date")
-    val joinDate: Timestamp = Timestamp.valueOf("1970-01-01 05:01:01")
+    val joinDate: LocalDate? = null,
 
-) : BaseEntity() {
+    ) : BaseEntity() {
+
+    companion object {
+        fun createFrom(memberDto: MemberDto): Member {
+            return Member(
+                userId = memberDto.userId,
+                membershipPlanId = memberDto.membershipPlanId,
+                joinDate = memberDto.joinDate
+            )
+        }
+    }
 }
 
 

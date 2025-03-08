@@ -24,4 +24,9 @@ class MembershipPlanService(
             throw FailedToCreateMembershipPlanException()
         }
     }
+
+    fun getAllPlans(): List<MembershipPlanDto> {
+        val membershipPlans = membershipPlanRepository.findAll()
+        return membershipPlans.map { membershipPlan -> MembershipPlanDto.createFrom(membershipPlan) }
+    }
 }
