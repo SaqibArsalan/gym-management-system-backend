@@ -2,6 +2,8 @@ package com.gym.membership.service
 
 import com.gym.membership.controller.dto.MembershipPlanDto
 import com.gym.membership.exception.FailedToCreateMembershipPlanException
+import com.gym.membership.exception.FailedToFetchMembershipPlanForIdException
+import com.gym.membership.exception.FailedToFetchMembershipPlansException
 import com.gym.membership.model.MembershipPlans
 import com.gym.membership.repository.MembershipPlanRepository
 import org.springframework.stereotype.Service
@@ -26,7 +28,18 @@ class MembershipPlanService(
     }
 
     fun getAllPlans(): List<MembershipPlanDto> {
-        val membershipPlans = membershipPlanRepository.findAll()
-        return membershipPlans.map { membershipPlan -> MembershipPlanDto.createFrom(membershipPlan) }
+        try {
+            val membershipPlans = membershipPlanRepository.findAll()
+            return membershipPlans.map { membershipPlan -> MembershipPlanDto.createFrom(membershipPlan) }
+        } catch (e: Exception) {
+            throw FailedToFetchMembershipPlansException()
+        }
+    }
+
+    fun getPlan(id: String): MembershipPlanDto {
+        val membershipPlan = membershipPlanRepository.findById(id).orElseThrow {
+            FailedToFetchMembershipPlanForIdException(id)
+        }
+        return MembershipPlanDto.createFrom(membershipPlan)
     }
 }
