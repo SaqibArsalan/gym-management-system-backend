@@ -17,6 +17,9 @@ data class MembershipSubscription(
     @Column(name = "expiry_date")
     val expiryDate: LocalDate? = null,
 
+    @Column(name = "status")
+    val status: String = "ACTIVE",
+
     @ManyToOne
     @JoinColumn(name = "membership_plan_id", nullable = false) // Foreign key to membership_plans table
     val membershipPlan: MembershipPlans = MembershipPlans()
