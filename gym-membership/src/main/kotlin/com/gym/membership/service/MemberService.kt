@@ -1,11 +1,10 @@
 package com.gym.membership.service
 
 import com.gym.membership.controller.dto.MemberDto
-import com.gym.membership.controller.dto.MembershipPlanDto
 import com.gym.membership.exception.FailedToCreateMemberException
-import com.gym.membership.exception.FailedToCreateMembershipPlanException
-import com.gym.membership.model.Member
+import com.gym.membership.exception.FailedToFetchMembershipPlanForIdException
 import com.gym.membership.model.MembershipPlans
+import com.gym.membership.model.MembershipSubscription
 import com.gym.membership.repository.MemberRepository
 import com.gym.membership.repository.MembershipPlanRepository
 import org.springframework.stereotype.Service
@@ -13,15 +12,19 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class MemberService(
-    private val memberRepository: MemberRepository
+    private val memberRepository: MemberRepository,
+    private val membershipPlanRepository: MembershipPlanRepository
     ) {
 
     @Transactional
     fun addMember(memberDto: MemberDto): MemberDto {
 
         try {
-            val memberModel = Member.createFrom(memberDto)
-            memberRepository.save(memberModel)
+            val membershipPlan = membershipPlanRepository.findById(memberDto.membershipPlanId).orElseThrow {
+                FailedToFetchMembershipPlanForIdException(memberDto.membershipPlanId)
+            }
+            val membershipSubscriptionModel = MembershipSubscription.createFrom(memberDto, membershipPlan)
+            memberRepository.save(membershipSubscriptionModel)
             return memberDto
 
         } catch (e : Exception) {

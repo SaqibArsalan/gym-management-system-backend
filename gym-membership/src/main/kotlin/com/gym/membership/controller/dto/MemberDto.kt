@@ -7,6 +7,7 @@ import java.time.LocalDate
 data class MemberDto(
     val userId: String,
     val membershipPlanId: String,
-    val joinDate: LocalDate
+    val joinDate: LocalDate,
+    val durationInMonths: Int
 ) {
 }

@@ -1,9 +1,9 @@
 package com.gym.membership.repository
 
-import com.gym.membership.model.Member
+import com.gym.membership.model.MembershipSubscription
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface MemberRepository: JpaRepository<Member, String> {
+interface MemberRepository: JpaRepository<MembershipSubscription, String> {
 }
