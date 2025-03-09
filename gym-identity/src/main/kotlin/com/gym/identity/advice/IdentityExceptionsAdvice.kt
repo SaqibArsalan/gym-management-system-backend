@@ -18,7 +18,7 @@ class IdentityExceptionsAdvice {
 
 
     @ExceptionHandler(UserNotPresentException::class)
-    fun handlerForUserNotException(ex: UserNotPresentException): ResponseEntity<Any> {
+    fun handlerForUserNotPresentException(ex: UserNotPresentException): ResponseEntity<Any> {
         val errors: MutableList<String> = Collections.singletonList(ex.message)
         logger.error(errorMessage, ex.javaClass.name, errors.joinToString(","), ex);
         return ResponseEntity(
@@ -28,7 +28,7 @@ class IdentityExceptionsAdvice {
     }
 
     @ExceptionHandler(RoleNotPresentException::class)
-    fun handlerForFetchTourException(ex: RoleNotPresentException): ResponseEntity<Any> {
+    fun handlerForRoleNotPresentException(ex: RoleNotPresentException): ResponseEntity<Any> {
         val errors: MutableList<String> = Collections.singletonList(ex.message)
         logger.error(errorMessage, ex.javaClass.name, errors.joinToString(","), ex);
         return ResponseEntity(

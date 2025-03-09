@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface MemberRepository: JpaRepository<MembershipSubscription, String> {
+interface MembershipSubscriptionRepository: JpaRepository<MembershipSubscription, String> {
 }
