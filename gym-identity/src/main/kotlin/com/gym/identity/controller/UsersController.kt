@@ -22,9 +22,9 @@ class UsersController(val usersService: UsersService) {
         return usersService.getUser(userId)
     }
 
-//    @PostMapping
-//    fun addUser(@RequestBody addUserAddOrUpdateDto: UserAddOrUpdateDto): ResponseEntity<*> {
-//        return ResponseEntity(usersService.addUser(addUserAddOrUpdateDto), HttpStatus.OK)
-//    }
+    @PostMapping
+    fun addUser(@RequestBody addUserAddOrUpdateDto: UserAddOrUpdateDto): ResponseEntity<*> {
+        return ResponseEntity(usersService.addUser(addUserAddOrUpdateDto), HttpStatus.OK)
+    }
 
 }

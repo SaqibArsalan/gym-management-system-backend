@@ -6,13 +6,14 @@ import com.gym.identity.exception.EmailAlreadyTakenException
 import com.gym.identity.exception.UserNotPresentException
 import com.gym.identity.model.User
 import com.gym.identity.repository.UserRepository
+import org.springframework.security.crypto.password.PasswordEncoder
 //import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class UsersService(private val userRepository: UserRepository)
-//                   private val passwordEncoder: PasswordEncoder)
+class UsersService(private val userRepository: UserRepository,
+                   private val passwordEncoder: PasswordEncoder)
                    {
 
     fun getUsers(): List<User> {
@@ -32,13 +33,13 @@ class UsersService(private val userRepository: UserRepository)
         }
     }
 
-//    @Transactional
-//    fun addUser(addUserAddOrUpdateDto: UserAddOrUpdateDto): UserInfoDto {
-//        ensureEmailIsAvailable(addUserAddOrUpdateDto.email)
-//        val userModel: User = addUserAddOrUpdateDto.toUserModel(passwordEncoder)
-//        val savedUser = userRepository.save(userModel)
-//        return savedUser.toUserInfo()
-//    }
+    @Transactional
+    fun addUser(addUserAddOrUpdateDto: UserAddOrUpdateDto): UserInfoDto {
+        ensureEmailIsAvailable(addUserAddOrUpdateDto.email)
+        val userModel: User = addUserAddOrUpdateDto.toUserModel(passwordEncoder)
+        val savedUser = userRepository.save(userModel)
+        return savedUser.toUserInfo()
+    }
 
     private fun ensureEmailIsAvailable(email: String) {
         if(userRepository.existsByEmailIgnoreCase(email)) {
