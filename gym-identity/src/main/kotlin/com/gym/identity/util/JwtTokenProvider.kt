@@ -1,4 +1,5 @@
 package com.gym.identity.util
+import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import org.springframework.stereotype.Component
 import java.util.*
@@ -26,7 +27,7 @@ class JwtTokenProvider {
     // Validate JWT Token
     fun validateToken(token: String): Boolean {
         return try {
-//            getClaims(token)
+            getClaims(token)
             true
         } catch (e: Exception) {
             false
@@ -34,23 +35,23 @@ class JwtTokenProvider {
     }
 
     // Extract Username from Token
-//    fun getUsername(token: String): String {
-//        return getClaims(token).subject
-//    }
+    fun getUsername(token: String): String {
+        return getClaims(token).subject
+    }
 
     // Get Authentication from Token
     fun getAuthentication(token: String): Authentication {
-//        val username = getUsername(token)
+        val username = getUsername(token)
         val userDetails = org.springframework.security.core.userdetails.User("username", "", emptyList())
         return org.springframework.security.authentication.UsernamePasswordAuthenticationToken(userDetails, token, emptyList())
     }
 
     // Parse Token Claims
-//    private fun getClaims(token: String): Claims {
-//        return Jwts.parserBuilder()
-//            .setSigningKey(secretKey)
-//            .build()
-//            .parseClaimsJws(token)
-//            .body
-//    }
+    private fun getClaims(token: String): Claims {
+        return Jwts.parserBuilder()
+            .setSigningKey(secretKey)
+            .build()
+            .parseClaimsJws(token)
+            .body
+    }
 }

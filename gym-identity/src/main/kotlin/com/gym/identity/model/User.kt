@@ -35,7 +35,7 @@ data class User(
     @JoinTable(
         name = "user_roles",
         joinColumns = [ JoinColumn(name = "user_id")] ,
-        inverseJoinColumns = [ JoinColumn(name = "rold_id")]
+        inverseJoinColumns = [ JoinColumn(name = "role_id")]
     )
     var roles: Set<Role> = mutableSetOf()
 

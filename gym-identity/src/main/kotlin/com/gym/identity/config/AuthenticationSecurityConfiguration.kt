@@ -19,7 +19,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 class AuthenticationSecurityConfiguration(
-    private val customUserDetailsService: UsersDetailsService) {
+    private val customUserDetailsService: UsersDetailsService,
+    private val jwtAuthenticationFilter: JwtAuthenticationFilter) {
 
     @Bean
     fun passwordEncoder(): PasswordEncoder {
@@ -50,7 +51,7 @@ class AuthenticationSecurityConfiguration(
             }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .authenticationProvider(authenticationProvider())
-//            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java) // ✅ Add JWT Filter
+            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java) // ✅ Add JWT Filter
 
         return http.build()
     }
