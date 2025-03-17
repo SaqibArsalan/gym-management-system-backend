@@ -2,6 +2,7 @@ package com.gym.identity.service
 
 import com.gym.identity.model.Role
 import com.gym.identity.repository.UserRepository
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -18,8 +19,10 @@ class UsersDetailsService(private val userRepository: UserRepository) : UserDeta
 
         println("Loaded user: ${user.get().email}, Password: ${user.get().password}")
 
+        val authorities = user.get().roles.map { SimpleGrantedAuthority(it.name) }
+
         return User(
-            user.get().email, user.get().password, emptyList() // No roles, return an empty list
+            user.get().email, user.get().password, authorities
         )
 
     }

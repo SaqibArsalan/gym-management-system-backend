@@ -52,4 +52,12 @@ class MembershipSubscriptionService(
             throw FailedToFetchActiveMembershipsExceptionForUser(userId)
         }
     }
+
+    fun getTotalActiveMembers(): Long {
+        try {
+            return membershipSubscriptionRepository.countActiveMembers()
+        } catch (ex: Exception) {
+            throw ex
+        }
+    }
 }
