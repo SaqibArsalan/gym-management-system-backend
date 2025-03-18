@@ -11,6 +11,9 @@ interface MembershipSubscriptionRepository: JpaRepository<MembershipSubscription
     @Query("SELECT m FROM MembershipSubscription m WHERE m.userId = :userId AND m.status = 'ACTIVE'")
     fun findActiveMembershipsByUserId(userId: String): List<MembershipSubscription>
 
-    @Query("SELECT COUNT(m) FROM MembershipSubscription m WHERE m.status = 'ACTIVE'")
+    @Query("SELECT COUNT(DISTINCT m.userId) FROM MembershipSubscription m WHERE m.status = 'ACTIVE'")
     fun countActiveMembers(): Long
+
+    @Query("SELECT COUNT(m) FROM MembershipSubscription m WHERE m.status = 'ACTIVE'")
+    fun countActiveSubscriptions(): Long
 }

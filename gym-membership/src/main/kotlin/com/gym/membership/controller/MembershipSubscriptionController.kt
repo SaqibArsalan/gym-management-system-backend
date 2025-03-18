@@ -21,6 +21,11 @@ class MembershipSubscriptionController(val membershipSubscriptionService: Member
         return ResponseEntity(membershipSubscriptionService.getActiveMemberships(userId), HttpStatus.OK)
     }
 
+    @GetMapping("/active-subscriptions")
+    fun getTotalActiveSubscriptions(): ResponseEntity<Long> {
+        return ResponseEntity(membershipSubscriptionService.getTotalActiveSubscriptions(), HttpStatus.OK)
+    }
+
     @GetMapping("/members")
     fun getTotalActiveMembers(): ResponseEntity<Long> {
         return ResponseEntity(membershipSubscriptionService.getTotalActiveMembers(), HttpStatus.OK)

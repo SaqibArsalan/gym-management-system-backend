@@ -60,4 +60,12 @@ class MembershipSubscriptionService(
             throw ex
         }
     }
+
+    fun getTotalActiveSubscriptions(): Long {
+        try {
+            return membershipSubscriptionRepository.countActiveSubscriptions()
+        } catch (ex: Exception) {
+            throw ex
+        }
+    }
 }
