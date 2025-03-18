@@ -68,4 +68,12 @@ class MembershipSubscriptionService(
             throw ex
         }
     }
+
+    fun getNewSignupsForCurrentMonth(): Long {
+        try {
+            return membershipSubscriptionRepository.countNewSignups()
+        } catch (ex: Exception) {
+            throw ex
+        }
+    }
 }

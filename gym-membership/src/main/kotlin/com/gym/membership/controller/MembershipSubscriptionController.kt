@@ -31,4 +31,9 @@ class MembershipSubscriptionController(val membershipSubscriptionService: Member
         return ResponseEntity(membershipSubscriptionService.getTotalActiveMembers(), HttpStatus.OK)
     }
 
+    @GetMapping("/new-signups")
+    fun getNewSignupsForCurrentMonth(): ResponseEntity<Long> {
+        return ResponseEntity(membershipSubscriptionService.getNewSignupsForCurrentMonth(), HttpStatus.OK)
+    }
+
 }

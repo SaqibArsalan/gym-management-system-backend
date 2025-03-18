@@ -16,4 +16,11 @@ interface MembershipSubscriptionRepository: JpaRepository<MembershipSubscription
 
     @Query("SELECT COUNT(m) FROM MembershipSubscription m WHERE m.status = 'ACTIVE'")
     fun countActiveSubscriptions(): Long
+
+    @Query("""
+        SELECT COUNT(DISTINCT m.userId) FROM MembershipSubscription m 
+    WHERE FUNCTION('DATE_TRUNC', 'MONTH', m.joinDate) = FUNCTION('DATE_TRUNC', 'MONTH', CURRENT_DATE) 
+        
+    """)
+    fun countNewSignups(): Long
 }
