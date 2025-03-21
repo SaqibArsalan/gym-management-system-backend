@@ -19,6 +19,10 @@ data class MembershipPlans(
     @Column(name = "description")
     val description: String = "",
 
+    @ManyToOne
+    @JoinColumn(name = "trainer_id", nullable = false) // Foreign key to membership_plans table
+    val trainer: MembershipPlans = MembershipPlans()
+
 ) : BaseEntity() {
 
     companion object {
