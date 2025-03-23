@@ -5,6 +5,7 @@ import com.gym.membership.controller.dto.MemberDto
 import com.gym.membership.exception.FailedToCreateMemberException
 import com.gym.membership.exception.FailedToFetchActiveMembershipsExceptionForUser
 import com.gym.membership.exception.FailedToFetchMembershipPlanForIdException
+import com.gym.membership.exception.FailedToFetchMembershipSubscriptionsException
 import com.gym.membership.model.MembershipSubscription
 import com.gym.membership.repository.MembershipSubscriptionRepository
 import com.gym.membership.repository.MembershipPlanRepository
@@ -43,6 +44,7 @@ class MembershipSubscriptionService(
                     membership -> ActiveMembershipDto(
                 membership.userId,
                 membership.membershipPlan.id!!,
+                membership.memberName,
                 membership.joinDate,
                 membership.expiryDate!!,
                 membership.membershipPlan.name,
@@ -50,6 +52,27 @@ class MembershipSubscriptionService(
             }
         } catch (ex: Exception) {
             throw FailedToFetchActiveMembershipsExceptionForUser(userId)
+        }
+    }
+
+    fun getMembershipsSubscriptions(): List<ActiveMembershipDto> {
+
+        try {
+            val membershipList = membershipSubscriptionRepository.findDistinctActiveMemberships()
+
+            return membershipList.map {
+                    membership -> ActiveMembershipDto(
+                membership.userId,
+                membership.membershipPlan.id!!,
+                membership.memberName,
+                membership.joinDate,
+                membership.expiryDate!!,
+                membership.membershipPlan.name,
+                membership.membershipPlan.price
+            )
+            }
+        } catch (ex: Exception) {
+            throw FailedToFetchMembershipSubscriptionsException()
         }
     }
 

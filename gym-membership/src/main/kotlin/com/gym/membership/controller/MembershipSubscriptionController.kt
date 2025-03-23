@@ -16,6 +16,11 @@ class MembershipSubscriptionController(val membershipSubscriptionService: Member
         return ResponseEntity(membershipSubscriptionService.addMembershipSubscription(memberDto), HttpStatus.CREATED)
     }
 
+    @GetMapping
+    fun getMembershipSubscriptions(): ResponseEntity<List<ActiveMembershipDto>> {
+        return ResponseEntity(membershipSubscriptionService.getMembershipsSubscriptions(), HttpStatus.OK)
+    }
+
     @GetMapping("{userId}")
     fun getActiveMemberships(@PathVariable userId: String): ResponseEntity<List<ActiveMembershipDto>> {
         return ResponseEntity(membershipSubscriptionService.getActiveMemberships(userId), HttpStatus.OK)

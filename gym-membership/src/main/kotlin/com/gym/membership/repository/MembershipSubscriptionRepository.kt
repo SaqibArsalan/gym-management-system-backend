@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 
+
 @Repository
 interface MembershipSubscriptionRepository: JpaRepository<MembershipSubscription, String> {
 
@@ -23,4 +24,16 @@ interface MembershipSubscriptionRepository: JpaRepository<MembershipSubscription
         
     """)
     fun countNewSignups(): Long
+
+    @Query("""
+    SELECT ms FROM MembershipSubscription ms
+    WHERE ms.status = 'ACTIVE'
+    AND ms.joinDate = (
+        SELECT MAX(ms2.joinDate)
+        FROM MembershipSubscription ms2
+        WHERE ms2.userId = ms.userId AND ms2.status = 'ACTIVE')
+        """
+    )
+    fun findDistinctActiveMemberships(): List<MembershipSubscription>
+
 }

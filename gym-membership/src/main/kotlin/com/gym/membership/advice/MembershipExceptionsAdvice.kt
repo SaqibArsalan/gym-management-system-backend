@@ -1,10 +1,7 @@
 package com.gym.membership.advice
 
 
-import com.gym.membership.exception.FailedToCreateMemberException
-import com.gym.membership.exception.FailedToCreateMembershipPlanException
-import com.gym.membership.exception.FailedToFetchMembershipPlanForIdException
-import com.gym.membership.exception.FailedToFetchMembershipPlansException
+import com.gym.membership.exception.*
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import org.springframework.http.HttpStatus
@@ -52,6 +49,16 @@ class MembershipExceptionsAdvice {
 
     @ExceptionHandler(FailedToFetchMembershipPlansException::class)
     fun handlerForFailedToFetchMembershipPlanException(ex: FailedToFetchMembershipPlansException): ResponseEntity<Any> {
+        val errors: MutableList<String> = Collections.singletonList(ex.message)
+        logger.error(errorMessage, ex.javaClass.name, errors.joinToString(","), ex);
+        return ResponseEntity(
+            mapOf("errors" to ex.message),
+            HttpStatus.BAD_REQUEST
+        )
+    }
+
+    @ExceptionHandler(FailedToFetchMembershipSubscriptionsException::class)
+    fun handlerForFailedToFetchMembershipSubscriptionsException(ex: FailedToFetchMembershipSubscriptionsException): ResponseEntity<Any> {
         val errors: MutableList<String> = Collections.singletonList(ex.message)
         logger.error(errorMessage, ex.javaClass.name, errors.joinToString(","), ex);
         return ResponseEntity(

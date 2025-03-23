@@ -11,6 +11,9 @@ data class MembershipSubscription(
     @Column(name = "user_id")
     val userId: String = "",
 
+    @Column(name = "name")
+    val memberName: String = "",
+
     @Column(name = "join_date")
     val joinDate: LocalDate = LocalDate.now(),
 
@@ -30,6 +33,7 @@ data class MembershipSubscription(
         fun createFrom(memberDto: MemberDto, membershipPlan: MembershipPlans): MembershipSubscription {
             return MembershipSubscription(
                 userId = memberDto.userId,
+                memberName = memberDto.memberName,
                 joinDate = memberDto.joinDate,
                 expiryDate = calculateExpiryDate(memberDto.joinDate, memberDto.durationInMonths),
                 membershipPlan = membershipPlan,
