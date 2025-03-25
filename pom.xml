@@ -26,7 +26,8 @@
 		<module>gym-identity</module>
         <module>gym-membership</module>
 		<module>gym-classes-and-sessions</module>
-	</modules>
+        <module>gym-staff</module>
+    </modules>
 	<scm>
 		<connection/>
 		<developerConnection/>

@@ -19,8 +19,8 @@ class MembershipPlanService(
 
         try {
             val membershipModel = MembershipPlans.createFrom(membershipPlanDto)
-            membershipPlanRepository.save(membershipModel)
-            return membershipPlanDto
+            val savedPlan = membershipPlanRepository.save(membershipModel)
+            return MembershipPlanDto.createFrom(savedPlan)
 
         } catch (e : Exception) {
             throw FailedToCreateMembershipPlanException()
