@@ -7,5 +7,7 @@ import org.springframework.stereotype.Repository
 @Repository
 interface StaffRepository: JpaRepository<Staff, String> {
 
+    fun findByUserId(userId: String): Staff
+
 
 }

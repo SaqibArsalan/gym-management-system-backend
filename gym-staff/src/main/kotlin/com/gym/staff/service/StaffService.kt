@@ -3,6 +3,7 @@ package com.gym.staff.service
 import com.gym.com.gym.staff.controller.dto.CreateOrUpdateStaffDto
 import com.gym.com.gym.staff.controller.dto.StaffResponseDto
 import com.gym.staff.exception.FailedToCreateStaffException
+import com.gym.staff.exception.FailedToFetchStaffForIdException
 import com.gym.staff.exception.FailedToFetchStaffListException
 import com.gym.staff.model.Staff
 import com.gym.staff.repository.StaffRepository
@@ -34,6 +35,20 @@ class StaffService(private val staffRepository: StaffRepository) {
             }
         } catch (ex: Exception) {
             throw FailedToFetchStaffListException()
+        }
+    }
+
+    fun getStaff(userId: String): StaffResponseDto {
+        try {
+            val staff = staffRepository.findByUserId(userId)
+            return StaffResponseDto(
+                staff.userId,
+                staff.name,
+                staff.salary,
+                staff.hireDate
+            )
+        } catch (ex: Exception) {
+            throw FailedToFetchStaffForIdException(userId)
         }
     }
 }
