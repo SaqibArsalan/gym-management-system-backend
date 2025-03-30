@@ -21,7 +21,7 @@ class MembershipSubscriptionController(val membershipSubscriptionService: Member
         return ResponseEntity(membershipSubscriptionService.getMembershipsSubscriptions(), HttpStatus.OK)
     }
 
-    @GetMapping("{userId}")
+    @GetMapping("/user/{userId}")
     fun getActiveMemberships(@PathVariable userId: String): ResponseEntity<List<ActiveMembershipDto>> {
         return ResponseEntity(membershipSubscriptionService.getActiveMemberships(userId), HttpStatus.OK)
     }
@@ -39,6 +39,11 @@ class MembershipSubscriptionController(val membershipSubscriptionService: Member
     @GetMapping("/new-signups")
     fun getNewSignupsForCurrentMonth(): ResponseEntity<Long> {
         return ResponseEntity(membershipSubscriptionService.getNewSignupsForCurrentMonth(), HttpStatus.OK)
+    }
+
+    @GetMapping("/{id}")
+    fun getMembershipDetails(@PathVariable id: String): ResponseEntity<ActiveMembershipDto> {
+        return ResponseEntity(membershipSubscriptionService.getMembershipDetails(id), HttpStatus.OK)
     }
 
 }

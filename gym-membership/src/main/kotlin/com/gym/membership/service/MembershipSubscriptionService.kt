@@ -2,10 +2,7 @@ package com.gym.membership.service
 
 import com.gym.membership.controller.dto.ActiveMembershipDto
 import com.gym.membership.controller.dto.MemberDto
-import com.gym.membership.exception.FailedToCreateMemberException
-import com.gym.membership.exception.FailedToFetchActiveMembershipsExceptionForUser
-import com.gym.membership.exception.FailedToFetchMembershipPlanForIdException
-import com.gym.membership.exception.FailedToFetchMembershipSubscriptionsException
+import com.gym.membership.exception.*
 import com.gym.membership.model.MembershipSubscription
 import com.gym.membership.repository.MembershipSubscriptionRepository
 import com.gym.membership.repository.MembershipPlanRepository
@@ -42,11 +39,12 @@ class MembershipSubscriptionService(
 
             return activeMemberships.map {
                     membership -> ActiveMembershipDto(
+                membership.id!!,
                 membership.userId,
                 membership.membershipPlan.id!!,
                 membership.memberName,
                 membership.joinDate,
-                membership.expiryDate!!,
+                membership.expiryDate,
                 membership.membershipPlan.name,
                 membership.membershipPlan.price)
             }
@@ -62,11 +60,12 @@ class MembershipSubscriptionService(
 
             return membershipList.map {
                     membership -> ActiveMembershipDto(
+                membership.id!!,
                 membership.userId,
                 membership.membershipPlan.id!!,
                 membership.memberName,
                 membership.joinDate,
-                membership.expiryDate!!,
+                membership.expiryDate,
                 membership.membershipPlan.name,
                 membership.membershipPlan.price
             )
@@ -97,6 +96,15 @@ class MembershipSubscriptionService(
             return membershipSubscriptionRepository.countNewSignups()
         } catch (ex: Exception) {
             throw ex
+        }
+    }
+
+    fun getMembershipDetails(id: String): ActiveMembershipDto {
+        try {
+            val membershipDetails = membershipSubscriptionRepository.findById(id).orElseThrow()
+            return ActiveMembershipDto.createFrom(membershipDetails)
+        } catch (ex: Exception) {
+            throw FailedToFetchMembershipDetailsForIdException(id)
         }
     }
 }

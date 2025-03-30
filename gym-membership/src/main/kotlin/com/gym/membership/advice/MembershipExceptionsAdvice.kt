@@ -67,4 +67,14 @@ class MembershipExceptionsAdvice {
         )
     }
 
+    @ExceptionHandler(FailedToFetchMembershipDetailsForIdException::class)
+    fun handlerForFailedToFetchMembershipDetailsForIdException(ex: FailedToFetchMembershipDetailsForIdException): ResponseEntity<Any> {
+        val errors: MutableList<String> = Collections.singletonList(ex.message)
+        logger.error(errorMessage, ex.javaClass.name, errors.joinToString(","), ex);
+        return ResponseEntity(
+            mapOf("errors" to ex.message),
+            HttpStatus.BAD_REQUEST
+        )
+    }
+
 }

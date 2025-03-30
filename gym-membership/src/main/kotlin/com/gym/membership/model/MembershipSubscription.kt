@@ -18,7 +18,7 @@ data class MembershipSubscription(
     val joinDate: LocalDate = LocalDate.now(),
 
     @Column(name = "expiry_date")
-    val expiryDate: LocalDate? = null,
+    val expiryDate: LocalDate = LocalDate.now(),
 
     @Column(name = "status")
     val status: String = "ACTIVE",
