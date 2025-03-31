@@ -27,4 +27,9 @@ class UsersController(val usersService: UsersService) {
         return ResponseEntity(usersService.addUser(addUserAddOrUpdateDto), HttpStatus.OK)
     }
 
+    @GetMapping("/search")
+    fun searchUsers(@RequestParam name: String): ResponseEntity<List<UserInfoDto>> {
+        return ResponseEntity(usersService.searchUsers(name), HttpStatus.OK)
+    }
+
 }

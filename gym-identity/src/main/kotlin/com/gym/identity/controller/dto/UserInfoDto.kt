@@ -1,6 +1,7 @@
 package com.gym.identity.controller.dto
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.gym.identity.model.User
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class UserInfoDto(
@@ -11,4 +12,17 @@ data class UserInfoDto(
     val phoneNumber: String,
     val accountStatus: String,
 
-) {}
+) {
+    companion object {
+        fun createFrom(user: User): UserInfoDto {
+            return UserInfoDto(
+                id = user.id!!,
+                firstName = user.firstName,
+                lastName = user.lastName,
+                email = user.lastName,
+                phoneNumber = user.phoneNumber,
+                accountStatus = user.accountStatus
+            )
+        }
+    }
+}

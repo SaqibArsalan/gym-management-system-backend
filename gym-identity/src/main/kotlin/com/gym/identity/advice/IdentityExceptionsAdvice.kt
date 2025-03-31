@@ -1,5 +1,6 @@
 package com.gym.identity.advice
 
+import com.gym.identity.exception.FailedToFetchUsersByNameException
 import com.gym.identity.exception.RoleNotPresentException
 import com.gym.identity.exception.UserNotPresentException
 import org.apache.logging.log4j.LogManager
@@ -29,6 +30,16 @@ class IdentityExceptionsAdvice {
 
     @ExceptionHandler(RoleNotPresentException::class)
     fun handlerForRoleNotPresentException(ex: RoleNotPresentException): ResponseEntity<Any> {
+        val errors: MutableList<String> = Collections.singletonList(ex.message)
+        logger.error(errorMessage, ex.javaClass.name, errors.joinToString(","), ex);
+        return ResponseEntity(
+            mapOf("errors" to ex.message),
+            HttpStatus.BAD_REQUEST
+        )
+    }
+
+    @ExceptionHandler(FailedToFetchUsersByNameException::class)
+    fun handlerForFailedToFetchUsersByNameException(ex: FailedToFetchUsersByNameException): ResponseEntity<Any> {
         val errors: MutableList<String> = Collections.singletonList(ex.message)
         logger.error(errorMessage, ex.javaClass.name, errors.joinToString(","), ex);
         return ResponseEntity(

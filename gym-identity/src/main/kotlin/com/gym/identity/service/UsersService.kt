@@ -3,6 +3,7 @@ package com.gym.identity.service
 import com.gym.identity.controller.dto.UserAddOrUpdateDto
 import com.gym.identity.controller.dto.UserInfoDto
 import com.gym.identity.exception.EmailAlreadyTakenException
+import com.gym.identity.exception.FailedToFetchUsersByNameException
 import com.gym.identity.exception.UserNotPresentException
 import com.gym.identity.model.User
 import com.gym.identity.repository.UserRepository
@@ -14,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class UsersService(private val userRepository: UserRepository,
                    private val passwordEncoder: PasswordEncoder)
-                   {
+{
 
     fun getUsers(): List<User> {
         return userRepository.findAll()
@@ -49,5 +50,14 @@ class UsersService(private val userRepository: UserRepository,
 
     fun ensureUserIsAvailable(userId: String): Boolean {
         return userRepository.existsById(userId)
+    }
+
+    fun searchUsers(name: String): List<UserInfoDto> {
+        try {
+            val users = userRepository.findUsersByName(name)
+            return users.map { UserInfoDto.createFrom(it) }
+        } catch (ex: FailedToFetchUsersByNameException) {
+            throw FailedToFetchUsersByNameException(name)
+        }
     }
 }
