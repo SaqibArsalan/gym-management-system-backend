@@ -19,7 +19,7 @@ data class UserInfoDto(
                 id = user.id!!,
                 firstName = user.firstName,
                 lastName = user.lastName,
-                email = user.lastName,
+                email = user.email,
                 phoneNumber = user.phoneNumber,
                 accountStatus = user.accountStatus
             )

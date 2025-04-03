@@ -1,5 +1,6 @@
 package com.gym.membership.controller
 
+import com.gym.membership.controller.dto.DropdownResponseDto
 import com.gym.membership.service.MembershipPlanService
 import com.gym.membership.controller.dto.MembershipPlanDto
 import org.springframework.http.HttpStatus
@@ -23,6 +24,11 @@ class MembershipPlanController(val membershipPlanService: MembershipPlanService)
     @GetMapping("{planId}")
     fun getPlan(@PathVariable planId: String): ResponseEntity<MembershipPlanDto> {
         return ResponseEntity(membershipPlanService.getPlan(planId), HttpStatus.OK)
+    }
+
+    @GetMapping("/dropdown")
+    fun getAllPlansDropdown(): ResponseEntity<List<DropdownResponseDto>> {
+        return ResponseEntity(membershipPlanService.getAllPlansDropdown(), HttpStatus.OK)
     }
 
 }

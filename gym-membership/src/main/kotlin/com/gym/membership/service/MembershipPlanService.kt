@@ -1,5 +1,6 @@
 package com.gym.membership.service
 
+import com.gym.membership.controller.dto.DropdownResponseDto
 import com.gym.membership.controller.dto.MembershipPlanDto
 import com.gym.membership.exception.FailedToCreateMembershipPlanException
 import com.gym.membership.exception.FailedToFetchMembershipPlanForIdException
@@ -42,4 +43,14 @@ class MembershipPlanService(
         }
         return MembershipPlanDto.createFrom(membershipPlan)
     }
+
+    fun getAllPlansDropdown(): List<DropdownResponseDto> {
+        try {
+            val membershipPlans = membershipPlanRepository.findAll()
+            return membershipPlans.map { membershipPlan -> DropdownResponseDto.createFrom(membershipPlan) }
+        } catch (e: Exception) {
+            throw FailedToFetchMembershipPlansException()
+        }
+    }
+
 }
