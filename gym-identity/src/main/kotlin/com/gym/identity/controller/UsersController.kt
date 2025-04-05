@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*
 class UsersController(val usersService: UsersService) {
 
     @GetMapping
-    fun getUsers(): List<User> {
+    fun getUsers(): List<UserInfoDto> {
         return usersService.getUsers()
     }
 

@@ -4,6 +4,7 @@ import com.gym.identity.controller.dto.UserAddOrUpdateDto
 import com.gym.identity.controller.dto.UserInfoDto
 import com.gym.identity.exception.EmailAlreadyTakenException
 import com.gym.identity.exception.FailedToFetchUsersByNameException
+import com.gym.identity.exception.FailedToFetchUsersException
 import com.gym.identity.exception.UserNotPresentException
 import com.gym.identity.model.User
 import com.gym.identity.repository.UserRepository
@@ -17,8 +18,16 @@ class UsersService(private val userRepository: UserRepository,
                    private val passwordEncoder: PasswordEncoder)
 {
 
-    fun getUsers(): List<User> {
-        return userRepository.findAll()
+    fun getUsers(): List<UserInfoDto> {
+        try {
+            val users = userRepository.findAll()
+            return users.map {
+                UserInfoDto.createFrom(it)
+            }
+
+        } catch (ex: Exception) {
+            throw FailedToFetchUsersException()
+        }
     }
 
     fun getUser(userId: String): UserInfoDto {
