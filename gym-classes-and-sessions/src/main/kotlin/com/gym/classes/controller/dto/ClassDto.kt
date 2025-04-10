@@ -1,11 +1,12 @@
 package com.gym.com.gym.classes.controller.dto
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.gym.com.gym.classes.model.GymClass
 import java.time.LocalDateTime
-import java.time.LocalTime
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class ClassDto(
+    val id: String,
     val className: String,
     val description: String,
     val trainerId: String,
@@ -13,4 +14,17 @@ data class ClassDto(
     val startTime: LocalDateTime,
     val endTime: LocalDateTime
 ) {
+    companion object {
+        fun createFrom(gymClass: GymClass): ClassDto {
+            return ClassDto(
+                id = gymClass.id!!,
+                className = gymClass.name,
+                description = gymClass.description,
+                trainerId = gymClass.trainerId,
+                capacity = gymClass.capacity,
+                startTime = gymClass.startTime,
+                endTime = gymClass.endTime
+            )
+        }
+    }
 }

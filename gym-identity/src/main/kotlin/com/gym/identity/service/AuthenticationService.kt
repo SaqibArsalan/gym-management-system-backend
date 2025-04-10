@@ -2,6 +2,7 @@ package com.gym.identity.service
 
 import com.gym.identity.controller.dto.AuthenticationResponseDto
 import com.gym.identity.controller.dto.CredentialDto
+import com.gym.identity.exception.UserAuthenticationException
 import com.gym.identity.repository.UserRepository
 import com.gym.identity.util.JwtTokenProvider
 import org.springframework.security.authentication.AuthenticationManager
@@ -44,7 +45,7 @@ class AuthenticationService(
                 throw BadCredentialsException("Invalid token")
             }
         } catch (e : Exception) {
-            throw BadCredentialsException("Authentication error")
+            throw UserAuthenticationException()
         }
     }
 }

@@ -4,6 +4,8 @@ import com.gym.classes.service.ClassManagementService
 import com.gym.com.gym.classes.controller.dto.ClassDto
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -16,6 +18,16 @@ class ClassManagementController(val classManagementService: ClassManagementServi
     @PostMapping
     fun createClass(@RequestBody classDto: ClassDto): ResponseEntity<ClassDto> {
         return ResponseEntity(classManagementService.createClass(classDto), HttpStatus.CREATED)
+    }
+
+    @GetMapping
+    fun getClasses(): ResponseEntity<List<ClassDto>> {
+        return ResponseEntity(classManagementService.getAllClasses(), HttpStatus.OK)
+    }
+
+    @GetMapping("/{id}")
+    fun getClassDetails(@PathVariable id: String): ResponseEntity<ClassDto> {
+        return ResponseEntity(classManagementService.getClassDetails(id), HttpStatus.OK)
     }
 
 }

@@ -24,7 +24,7 @@ data class MembershipSubscription(
     val status: String = "ACTIVE",
 
     @ManyToOne
-    @JoinColumn(name = "membership_plan_id", nullable = false) // Foreign key to membership_plans table
+    @JoinColumn(name = "membership_plan_id", nullable = false)
     val membershipPlan: MembershipPlans = MembershipPlans()
 
     ) : BaseEntity() {
