@@ -5,7 +5,8 @@ import com.gym.com.gym.classes.model.GymClass
 import java.time.LocalDateTime
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class ClassDto(
+data class ClassResponseDto(
+    val id: String,
     val className: String,
     val description: String,
     val trainerId: String,
@@ -14,8 +15,9 @@ data class ClassDto(
     val endTime: LocalDateTime
 ) {
     companion object {
-        fun createFrom(gymClass: GymClass): ClassDto {
-            return ClassDto(
+        fun createFrom(gymClass: GymClass): ClassResponseDto {
+            return ClassResponseDto(
+                id = gymClass.id!!,
                 className = gymClass.name,
                 description = gymClass.description,
                 trainerId = gymClass.trainerId,

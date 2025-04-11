@@ -6,6 +6,7 @@ import java.time.LocalDate
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class StaffResponseDto(
+    val id: String,
     val userId: String,
     val name: String,
     val salary: Double,
@@ -14,6 +15,7 @@ data class StaffResponseDto(
     companion object {
         fun createFrom(staff: Staff): StaffResponseDto {
             return StaffResponseDto(
+                id = staff.id!!,
                 userId = staff.userId,
                 name = staff.name,
                 salary = staff.salary,

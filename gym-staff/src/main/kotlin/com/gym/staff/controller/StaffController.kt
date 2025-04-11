@@ -26,4 +26,9 @@ class StaffController(val staffService: StaffService) {
     fun getStaffById(@PathVariable("userId") userId: String): ResponseEntity<StaffResponseDto> {
         return ResponseEntity(staffService.getStaff(userId), HttpStatus.OK)
     }
+
+    @GetMapping("/search")
+    fun searchStaff(@RequestParam name: String): ResponseEntity<List<StaffResponseDto>> {
+        return ResponseEntity(staffService.searchStaff(name), HttpStatus.OK)
+    }
 }

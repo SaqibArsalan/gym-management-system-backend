@@ -2,6 +2,7 @@ package com.gym.classes.service
 
 import com.gym.com.gym.classes.Repository.ClassManagementRepository
 import com.gym.com.gym.classes.controller.dto.ClassDto
+import com.gym.com.gym.classes.controller.dto.ClassResponseDto
 import com.gym.com.gym.classes.exception.FailedToCreateClassException
 import com.gym.com.gym.classes.exception.FailedToFetchAllClassesException
 import com.gym.com.gym.classes.exception.FailedToFetchClassDetailsException
@@ -13,20 +14,20 @@ import org.springframework.transaction.annotation.Transactional
 class ClassManagementService(private val classRepository: ClassManagementRepository) {
 
     @Transactional
-    fun createClass(classDto: ClassDto): ClassDto {
+    fun createClass(classDto: ClassDto): ClassResponseDto {
         try {
             val savedClass = classRepository.save(GymClass.createFrom(classDto))
-            return ClassDto.createFrom(savedClass)
+            return ClassResponseDto.createFrom(savedClass)
 
         } catch (ex: Exception) {
             throw FailedToCreateClassException()
         }
     }
 
-    fun getAllClasses(): List<ClassDto> {
+    fun getAllClasses(): List<ClassResponseDto> {
         try {
             val classes = classRepository.findAll()
-            return classes.map { ClassDto.createFrom(it) }
+            return classes.map { ClassResponseDto.createFrom(it) }
         } catch (ex: Exception) {
             throw FailedToFetchAllClassesException()
         }
