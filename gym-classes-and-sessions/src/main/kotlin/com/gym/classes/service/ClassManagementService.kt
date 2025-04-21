@@ -42,4 +42,13 @@ class ClassManagementService(private val classRepository: ClassManagementReposit
         }
     }
 
+    fun searchClass(name: String): List<ClassResponseDto> {
+        try {
+            val staffList = classRepository.findClassesByName(name)
+            return staffList.map { ClassResponseDto.createFrom(it) }
+        } catch (ex: FailedToFetchAllClassesException) {
+            throw FailedToFetchAllClassesException()
+        }
+    }
+
 }
