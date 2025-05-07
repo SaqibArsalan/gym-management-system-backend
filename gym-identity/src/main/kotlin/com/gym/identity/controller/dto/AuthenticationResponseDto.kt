@@ -9,6 +9,7 @@ data class AuthenticationResponseDto(
     val userInfoDto: UserInfoDto,
     val expiresAt: String,
     val refreshToken: String,
+    val scopes: List<String>,
     val roles: List<String>
 
 ) {}

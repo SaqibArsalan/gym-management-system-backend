@@ -1,5 +1,6 @@
 package com.gym.identity.config
 
+import com.gym.identity.config.filter.PreAuthorizationFilter
 import com.gym.identity.service.UsersDetailsService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -7,6 +8,7 @@ import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration
@@ -18,9 +20,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled = true)
 class AuthenticationSecurityConfiguration(
     private val customUserDetailsService: UsersDetailsService,
-    private val jwtAuthenticationFilter: JwtAuthenticationFilter) {
+    private val jwtAuthenticationFilter: JwtAuthenticationFilter,
+    private val preAuthorizeFilter: PreAuthorizationFilter) {
 
     @Bean
     fun passwordEncoder(): PasswordEncoder {
@@ -51,7 +55,8 @@ class AuthenticationSecurityConfiguration(
             }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .authenticationProvider(authenticationProvider())
-            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java) // ✅ Add JWT Filter
+            .addFilterBefore(preAuthorizeFilter, UsernamePasswordAuthenticationFilter::class.java)
+            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
 
         return http.build()
     }

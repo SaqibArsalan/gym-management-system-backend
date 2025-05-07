@@ -1,16 +1,14 @@
 package com.gym.identity.util
+
+
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
-import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
-import org.springframework.stereotype.Component
-import java.util.*
-
-
 import org.springframework.security.core.Authentication
+import org.springframework.stereotype.Component
 import java.security.SecureRandom
+import java.util.*
 import javax.crypto.SecretKey
-import javax.crypto.spec.SecretKeySpec
 
 @Component
 class JwtTokenProvider {
@@ -19,13 +17,19 @@ class JwtTokenProvider {
     private val expirationTime: Long = 86400000 // 24 hours
 
     // Generate JWT Token
-    fun generateToken(email: String): String {
+    fun generateToken(email: String, userId: String, scopes: List<String>): String {
+        val claims = mutableMapOf<String, Any>(
+            "USER_ID_KEY" to userId,
+            "SCOPES_KEY" to scopes
+        )
+
         return Jwts.builder()
-            .subject(email) // ✅ Modern way to set the subject
+            .subject(email)
+            .claims(claims)
             .issuedAt(Date())
             .expiration(Date(System.currentTimeMillis() + 86400000)) // 1-day expiry
             .signWith(secretKey)
-            .compact() // ✅ Should now work
+            .compact()
     }
 
     // Validate JWT Token

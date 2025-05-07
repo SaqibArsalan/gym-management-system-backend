@@ -17,7 +17,8 @@ import org.springframework.transaction.annotation.Transactional
 class AuthenticationService(
     private val userRepository: UserRepository,
     private val jwt: JwtTokenProvider,
-    private val authenticationManager: AuthenticationManager
+    private val authenticationManager: AuthenticationManager,
+    private val usersDetailsService: UsersDetailsService
     ) {
 
     @Transactional
@@ -26,20 +27,22 @@ class AuthenticationService(
             throw BadCredentialsException("User not found")
         }
 
-//        val roles = usersDetailsService.getRolesFor(user.roles)
+        val roles = usersDetailsService.getRolesFor(user.roles)
 
         try {
             val authentication : Authentication = authenticationManager.authenticate(UsernamePasswordAuthenticationToken(user.email, credentialDto.password))
             if (authentication.isAuthenticated) {
                 SecurityContextHolder.getContext().authentication = authentication
-                val token: String = jwt.generateToken(user.email)
+                val scopes = authentication.authorities.map { it.authority }
+                val token: String = jwt.generateToken(user.email, user.id!!, scopes = scopes)
                 return AuthenticationResponseDto(
                     token,
                     "",
                     userInfoDto = user.toUserInfo(),
                     "",
                     "",
-                    listOf()
+                    scopes,
+                    roles
                 )
             } else {
                 throw BadCredentialsException("Invalid token")
